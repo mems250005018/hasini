@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git commit -q -m 'Add photos and update dependencies *)"
+      "Bash(git commit -q -m 'Add photos and update dependencies *)",
+      "Bash(gh auth *)",
+      "Bash(git commit -q -m 'Build 3D animated birthday invitation for Hasini *)"
     ]
   }
 }
