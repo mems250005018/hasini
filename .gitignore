@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original full-size dish photos (resized copies live in public/photos)
+/chicken_biryani.png
+/egg_rice.png
+/non_veg.png

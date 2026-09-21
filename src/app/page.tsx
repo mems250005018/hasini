@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import InviteCard from "@/components/InviteCard";
 import Cake from "@/components/Cake";
-import BiryaniRing from "@/components/BiryaniRing";
+import Feast from "@/components/Feast";
 import Polaroid from "@/components/Polaroid";
 import Intro from "@/components/Intro";
 import Marquee from "@/components/Marquee";
@@ -20,7 +20,7 @@ export default function Home() {
       <Hero />
       <Marquee />
       <InviteCard />
-      <BiryaniRing />
+      <Feast />
       <Cake />
       <Marquee flip />
       <Polaroid />

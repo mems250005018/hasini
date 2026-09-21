@@ -45,6 +45,11 @@ export default function InviteCard() {
   const dayNum = date.toLocaleDateString("en-IN", { day: "numeric" });
   const month = date.toLocaleDateString("en-IN", { month: "long" });
   const clock = date.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
+  // The party is the night before: e.g. Tuesday night, 22 Sept, running into midnight.
+  const eve = new Date(date.getTime() - 86400000);
+  const eveDay = eve.toLocaleDateString("en-IN", { weekday: "long" });
+  const eveNum = eve.toLocaleDateString("en-IN", { day: "numeric" });
+  const eveMonth = eve.toLocaleDateString("en-IN", { month: "long" });
 
   const flip = () => {
     setFlipped((f) => !f);
@@ -122,9 +127,9 @@ export default function InviteCard() {
                 <div>
                   <dt>When</dt>
                   <dd>
-                    {day}, {dayNum} {month}
+                    {eveDay} night, {eveNum} {eveMonth}
                     <br />
-                    {clock}
+                    Midnight, {clock} on {day}, {dayNum} {month}
                   </dd>
                 </div>
                 <div>

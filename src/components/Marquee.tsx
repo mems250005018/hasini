@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-const WORDS = ["Chicken Biryani", "Happy Birthday Hasini", "Extra Raita", "23 September", "Make a Wish", "Dum Biryani", "Lake at Midnight"];
+const WORDS = ["Chicken Biryani", "Happy Birthday Hasini", "Extra Raita", "22nd Night", "Make a Wish", "Dum Biryani", "Lake at Midnight"];
 
 function Band({ reverse, tone, angle, from }: { reverse?: boolean; tone: "ink" | "chili"; angle: number; from: number }) {
   // The row is rendered twice; sliding the track by exactly half loops it with no seam.
