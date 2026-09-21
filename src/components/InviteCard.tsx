@@ -55,6 +55,14 @@ export default function InviteCard() {
     ? `https://wa.me/${invite.whatsapp}?text=${encodeURIComponent(`Happy birthday in advance ${invite.guest}! I'll be there.`)}`
     : null;
 
+  const stamp = (d: Date) => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+  const end = new Date(date.getTime() + 4 * 3600000);
+  const calHref =
+    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    `&text=${encodeURIComponent(`${invite.guest}'s Birthday`)}` +
+    `&dates=${stamp(date)}/${stamp(end)}` +
+    `&location=${encodeURIComponent([invite.venue, invite.address].filter(Boolean).join(", "))}`;
+
   return (
     <section id="invite" className="invite reveal">
       <h2 className="kicker">Flip it over</h2>
@@ -91,24 +99,24 @@ export default function InviteCard() {
                   <dd>
                     {day}, {dayNum} {month}
                     <br />
-                    {clock} onwards
+                    {clock}
                   </dd>
                 </div>
                 <div>
                   <dt>Where</dt>
                   <dd>
                     {invite.venue}
-                    <br />
-                    {invite.address}
+                    {invite.address && (
+                      <>
+                        <br />
+                        {invite.address}
+                      </>
+                    )}
                   </dd>
                 </div>
                 <div>
                   <dt>Wear</dt>
                   <dd>{invite.dressCode}</dd>
-                </div>
-                <div>
-                  <dt>Host</dt>
-                  <dd>{invite.host}</dd>
                 </div>
               </dl>
             </span>
@@ -131,6 +139,9 @@ export default function InviteCard() {
         <button type="button" className="big-btn" onClick={rsvp}>
           {said ? "See you there" : "I'm coming"}
         </button>
+        <a className="big-btn alt" href={calHref} target="_blank" rel="noopener noreferrer">
+          Add to calendar
+        </a>
         {waHref && (
           <a className="big-btn alt" href={waHref} target="_blank" rel="noopener noreferrer">
             Tell {invite.host} on WhatsApp

@@ -125,7 +125,8 @@ img {
   width: min(1100px, 100%);
   height: min(100svh, 880px);
   transform-style: preserve-3d;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  --sc: 0;
+  transform: translateY(calc(var(--sc) * -70px)) rotateX(calc(var(--rx) + var(--sc) * 14deg)) rotateY(var(--ry));
 }
 
 .stage > * {
@@ -669,9 +670,52 @@ img {
   to { transform: scale(0.9, 1.15) rotate(4deg); }
 }
 
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--tomato);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 60;
+}
+.balloon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.balloon.popped {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s;
+}
+
 @media (max-width: 700px) {
-  .balloon { width: 60px; height: 74px; }
-  .balloon-string { height: 80px; }
+  .balloon { width: 58px; height: 72px; }
+  .balloon-string { height: 70px; }
+  .hero { min-height: 100svh; }
+  .stage { height: 100svh; }
+  .back-word { top: 9%; font-size: 17vw; white-space: normal; width: 90%; }
+  .person { height: 66svh; }
+  .name3d { bottom: 16%; font-size: 17vw; }
+  .hero-line { bottom: 5%; font-size: 0.95rem; }
+  .sun-disc { transform: translateX(90%) translateZ(-200px); top: 24%; }
+  .scroll-cue { bottom: auto; top: 0.9rem; right: 0.9rem; font-size: 0.9rem; }
+  .cake-perspective { height: 380px; }
+  .cake-rotor { transform: rotateX(-22deg) rotateY(var(--spin, 0deg)) scale(0.78); top: 40px; }
+  .cake-copy { text-align: center; }
+  .rsvp .big-btn { width: 100%; text-align: center; }
+  .big-btn { padding: 0.9rem 1.4rem; }
+  .memory { text-align: center; gap: 2rem; }
+  .memory-small { margin-inline: auto; }
+  .foot { font-size: 1.25rem; }
+}
+
+@media (max-width: 380px) {
+  .countdown { gap: 0.4rem; }
+  .card-stamp { width: 84px; height: 84px; }
+  .card-stamp b { font-size: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

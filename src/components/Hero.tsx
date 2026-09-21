@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fireConfetti } from "./Confetti";
 import { invite } from "@/lib/invite";
 
@@ -31,6 +31,21 @@ function Balloon({ color }: { color: string }) {
 
 export default function Hero() {
   const stage = useRef<HTMLDivElement>(null);
+  const [popped, setPopped] = useState<number[]>([]);
+  const [to, setTo] = useState("");
+
+  useEffect(() => {
+    const name = new URLSearchParams(window.location.search).get("to");
+    if (name) setTo(name.slice(0, 30));
+  }, []);
+
+  const pop = (e: React.MouseEvent, i: number) => {
+    e.stopPropagation();
+    if (popped.includes(i)) return;
+    setPopped((p) => [...p, i]);
+    fireConfetti(e.clientX, e.clientY, 50);
+    setTimeout(() => setPopped((p) => p.filter((n) => n !== i)), 3500);
+  };
 
   useEffect(() => {
     const el = stage.current!;
@@ -49,12 +64,20 @@ export default function Hero() {
       lastMove = performance.now();
     };
     window.addEventListener("pointermove", move);
+    const tiltPhone = (e: DeviceOrientationEvent) => {
+      if (e.gamma === null || e.beta === null) return;
+      tx = Math.max(-1, Math.min(1, e.gamma / 30));
+      ty = Math.max(-1, Math.min(1, (e.beta - 50) / 30));
+      lastMove = performance.now();
+    };
+    window.addEventListener("deviceorientation", tiltPhone);
 
     const loop = (t: number) => {
       if (t - lastMove > 2500) {
         tx = Math.sin(t / 2200) * 0.7;
         ty = Math.cos(t / 3100) * 0.35;
       }
+      el.style.setProperty("--sc", String(Math.min(window.scrollY / window.innerHeight, 1)));
       cx += (tx - cx) * 0.06;
       cy += (ty - cy) * 0.06;
       el.style.setProperty("--ry", `${cx * 16}deg`);
@@ -65,6 +88,7 @@ export default function Hero() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", move);
+      window.removeEventListener("deviceorientation", tiltPhone);
     };
   }, []);
 
@@ -103,7 +127,8 @@ export default function Hero() {
           {BALLOONS.map((b, i) => (
             <div
               key={i}
-              className="balloon"
+              className={popped.includes(i) ? "balloon popped" : "balloon"}
+              onClick={(e) => pop(e, i)}
               style={{ left: b.x, top: b.y, transform: `translateZ(${b.z}px) scale(${b.size})`, animationDelay: `${b.delay}s` }}
             >
               <Balloon color={b.color} />
@@ -111,8 +136,8 @@ export default function Hero() {
           ))}
 
           <p className="hero-line">
-            <span>is turning a year more brilliant.</span>
-            <em>Tap anywhere. Something happens.</em>
+            <span>{to ? `${to}, ${invite.guest} is turning a year more brilliant.` : `${invite.guest} is turning a year more brilliant.`}</span>
+            <em>Tap anywhere. Pop a balloon.</em>
           </p>
         </div>
       </div>

@@ -17,7 +17,16 @@ export default function Reveal() {
       { threshold: 0.15 },
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    const bar = document.getElementById("progress");
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (bar) bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
-  return null;
+  return <div id="progress" className="progress" aria-hidden="true" />;
 }

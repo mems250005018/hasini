@@ -3,9 +3,9 @@ export const invite = {
   guest: "Hasini",
   host: "Jagrut",
   // Local time with offset. Change to the real party date.
-  date: "2026-10-10T19:00:00+05:30",
-  venue: "Venue to be announced",
-  address: "Address coming soon",
+  date: "2026-10-10T00:00:00+05:30",
+  venue: "Lake",
+  address: "",
   dressCode: "Come as you are, bring the noise",
   // Country code plus number, digits only (e.g. "919876543210"). Leave empty to hide WhatsApp.
   whatsapp: "",
