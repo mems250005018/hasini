@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { fireConfetti } from "./Confetti";
-import Spices from "./Spices";
-import Balloons3D from "./Balloons3D";
-import Bling from "./Bling";
+import { fireConfetti } from "@/components/fx/Confetti";
+import Spices from "@/components/fx/Spices";
+import Balloons3D from "@/components/fx/Balloons3D";
+import Bling from "@/components/fx/Bling";
 import { invite } from "@/lib/invite";
+import { photos } from "@/lib/assets";
 
 const LETTERS = invite.guest.toUpperCase().split("");
 const SLICES = 9;
@@ -94,7 +95,7 @@ export default function Hero() {
 
           <div className="person">
             <div className="person-art">
-              <Image src="/photos/hasini.png" alt="Hasini" width={970} height={1621} priority sizes="(max-width: 700px) 60vw, 420px" />
+              <Image src={photos.portrait.src} alt="Hasini" width={photos.portrait.width} height={photos.portrait.height} priority sizes="(max-width: 700px) 60vw, 420px" />
               <Bling />
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { fireConfetti } from "./Confetti";
+import { fireConfetti } from "@/components/fx/Confetti";
 
 const COLORS = [0xb7311b, 0xf2a81d, 0x3f5a2b, 0x5b2a14, 0xe8c46a, 0xd1541c, 0xf6e9c8, 0xb7311b];
 // nx / ny are fractions of the visible half-width / half-height, z is depth.

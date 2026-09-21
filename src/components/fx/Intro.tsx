@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fireConfetti } from "./Confetti";
+import { fireConfetti } from "@/components/fx/Confetti";
 import { invite } from "@/lib/invite";
 
 const KINDS = ["rice", "rice", "chili", "cardamom", "leg", "rice", "anise", "leg"];

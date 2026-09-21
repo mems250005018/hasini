@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { fireConfetti } from "./Confetti";
+import { fireConfetti } from "@/components/fx/Confetti";
 import { motion } from "motion/react";
-import Spices from "./Spices";
-import SplitText from "./SplitText";
+import Spices from "@/components/fx/Spices";
+import { models } from "@/lib/assets";
+import SplitText from "@/components/fx/SplitText";
 
 export default function Cake() {
   const mount = useRef<HTMLDivElement>(null);
@@ -58,7 +59,7 @@ export default function Cake() {
       let model: import("three").Object3D | null = null;
       let baseY = 0;
       new GLTFLoader().load(
-        "/models/cake.glb",
+        models.cake,
         (gltf) => {
           if (disposed) return;
           model = gltf.scene;

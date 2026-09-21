@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useMotionValue, useTransform } from "motion/react";
-import SplitText from "./SplitText";
+import SplitText from "@/components/fx/SplitText";
 import { invite } from "@/lib/invite";
+import { photos } from "@/lib/assets";
 
 export default function Polaroid() {
   const ref = useRef<HTMLDivElement>(null);
@@ -36,7 +37,7 @@ export default function Polaroid() {
         >
         <div className="polaroid" ref={ref}>
           <span className="tape" />
-          <Image src="/photos/friends.jpeg" alt="Hasini with two friends showing off a project" width={1280} height={960} sizes="(max-width: 700px) 80vw, 480px" />
+          <Image src={photos.group.src} alt="Hasini with two friends showing off a project" width={photos.group.width} height={photos.group.height} sizes="(max-width: 700px) 80vw, 480px" />
           <p>Same people. Same chaos. One more candle.</p>
         </div>
         </motion.div>

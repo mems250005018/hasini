@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { fireConfetti } from "./Confetti";
+import { fireConfetti } from "@/components/fx/Confetti";
 import { invite } from "@/lib/invite";
 
 function useCountdown(target: number) {

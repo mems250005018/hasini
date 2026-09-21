@@ -3,13 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import Spices from "./Spices";
+import Spices from "@/components/fx/Spices";
+import { photos } from "@/lib/assets";
 
-const DISHES = [
-  { src: "/photos/chicken_biryani.png", name: "Chicken Biryani" },
-  { src: "/photos/egg_rice.jpg", name: "Egg Rice" },
-  { src: "/photos/non_veg.png", name: "Non-Veg Special" },
-];
+const DISHES = photos.dishes;
 
 // Cover-flow style gallery: the active dish faces you, the others fan out at an angle behind it.
 export default function Feast() {

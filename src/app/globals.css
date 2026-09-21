@@ -1177,3 +1177,105 @@ img {
 @media (max-width: 700px) {
   .feast-stage { height: 240px; }
 }
+
+/* 3D photo graph */
+.graph-section {
+  background: #2a140a;
+  color: var(--paper);
+  padding: clamp(3rem, 8vw, 5rem) 1rem clamp(3rem, 8vw, 5rem);
+  text-align: center;
+}
+.graph-section .kicker { color: var(--sun); }
+.graph-title {
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.6rem;
+}
+.graph-stage {
+  position: relative;
+  max-width: 1200px;
+  height: clamp(440px, 78vh, 700px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 4px solid var(--sun);
+  border-radius: 26px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+.graph-canvas,
+.graph-canvas canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.graph-scroller {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+  outline: none;
+}
+.graph-scroller::-webkit-scrollbar { display: none; }
+.graph-scroller.drag { scroll-snap-type: none; cursor: grabbing; }
+.graph-slide { flex: 0 0 100%; scroll-snap-align: start; }
+.graph-hud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+}
+.graph-hud > * { pointer-events: auto; }
+.graph-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--sun);
+  color: var(--ink);
+  font-size: 1.4rem;
+  font-weight: 800;
+  box-shadow: var(--sh-1);
+}
+.graph-btn:disabled { opacity: 0.35; cursor: default; }
+.graph-dots { display: flex; gap: 0.6rem; }
+.graph-dots button {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--sun);
+  transition: background 0.3s, transform 0.3s;
+}
+.graph-dots button.on { background: var(--sun); transform: scale(1.4); }
+.graph-hint {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: rgba(42, 20, 10, 0.7);
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (max-width: 700px) {
+  .graph-stage { height: 70svh; border-radius: 18px; }
+  .graph-hint { font-size: 0.95rem; }
+}
