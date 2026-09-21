@@ -25,17 +25,10 @@ export default function Reveal() {
       (el as HTMLElement).style.setProperty("--d", String(i % 4));
       both.observe(el);
     });
-    const bar = document.getElementById("progress");
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (bar) bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       once.disconnect();
       both.disconnect();
-      window.removeEventListener("scroll", onScroll);
     };
   }, []);
-  return <div id="progress" className="progress" aria-hidden="true" />;
+  return null;
 }

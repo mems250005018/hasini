@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { fireConfetti } from "./Confetti";
+import { motion } from "motion/react";
 import Spices from "./Spices";
+import SplitText from "./SplitText";
 
 export default function Cake() {
   const mount = useRef<HTMLDivElement>(null);
@@ -27,6 +29,8 @@ export default function Cake() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       host.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
@@ -34,6 +38,10 @@ export default function Cake() {
       scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
       const sun = new THREE.DirectionalLight(0xfff0d0, 2.2);
       sun.position.set(3, 5, 4);
+      sun.castShadow = true;
+      sun.shadow.mapSize.set(2048, 2048);
+      sun.shadow.bias = -0.0004;
+      sun.shadow.radius = 6;
       scene.add(sun);
 
       const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 1000);
@@ -48,6 +56,7 @@ export default function Cake() {
       renderer.domElement.style.touchAction = "pan-y"; // vertical swipe scrolls the page, horizontal swipe spins the cake
 
       let model: import("three").Object3D | null = null;
+      let baseY = 0;
       new GLTFLoader().load(
         "/models/cake.glb",
         (gltf) => {
@@ -57,8 +66,29 @@ export default function Cake() {
           const size = box.getSize(new THREE.Vector3());
           const center = box.getCenter(new THREE.Vector3());
           model.position.sub(center);
+          model.traverse((o) => {
+            if ((o as import("three").Mesh).isMesh) {
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
           scene.add(model);
+          baseY = model.position.y;
           const radius = Math.max(size.x, size.y, size.z);
+          // Soft floor shadow under the cake.
+          const floor = new THREE.Mesh(new THREE.PlaneGeometry(radius * 8, radius * 8), new THREE.ShadowMaterial({ opacity: 0.38 }));
+          floor.rotation.x = -Math.PI / 2;
+          floor.position.y = -size.y / 2 - radius * 0.06;
+          floor.receiveShadow = true;
+          scene.add(floor);
+          sun.position.set(radius * 1.6, radius * 3, radius * 1.4);
+          sun.shadow.camera.left = -radius * 1.6;
+          sun.shadow.camera.right = radius * 1.6;
+          sun.shadow.camera.top = radius * 1.6;
+          sun.shadow.camera.bottom = -radius * 1.6;
+          sun.shadow.camera.near = 0.1;
+          sun.shadow.camera.far = radius * 10;
+          sun.shadow.camera.updateProjectionMatrix();
           camera.position.set(radius * 1.1, radius * 0.9, radius * 1.6);
           controls.target.set(0, 0, 0);
           controls.update();
@@ -87,6 +117,7 @@ export default function Cake() {
         if (!visible) return;
         boost.current *= 0.96;
         controls.autoRotateSpeed = 2 + boost.current;
+        if (model) model.position.y = baseY + Math.sin(performance.now() / 650) * 0.02 * (camera.position.length() / 3);
         controls.update();
         renderer.render(scene, camera);
       };
@@ -120,10 +151,10 @@ export default function Cake() {
       <Spices count={14} />
       <div className="cake-copy rv from-left">
         <h2 className="kicker">Dessert, after the biryani</h2>
-        <p className="cake-title">Spin the cake. Then make a wish.</p>
-        <button type="button" className="big-btn" onClick={celebrate}>
+        <SplitText className="cake-title" text="Spin the cake. Then make a wish." />
+        <motion.button type="button" className="big-btn" onClick={celebrate} whileHover={{ scale: 1.07, rotate: -2 }} whileTap={{ scale: 0.94 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
           {wished ? "Wish sent. Spin again" : "Make a wish"}
-        </button>
+        </motion.button>
         <p className="wish">Swipe sideways to turn it. Scroll normally to move on.</p>
       </div>
 

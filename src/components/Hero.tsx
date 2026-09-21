@@ -4,35 +4,15 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { fireConfetti } from "./Confetti";
 import Spices from "./Spices";
+import Balloons3D from "./Balloons3D";
+import Bling from "./Bling";
 import { invite } from "@/lib/invite";
 
 const LETTERS = invite.guest.toUpperCase().split("");
 const SLICES = 9;
 
-const BALLOONS = [
-  { color: "#B7311B", x: "6%", y: "14%", z: 220, size: 1.1, delay: 0 },
-  { color: "#F2A81D", x: "84%", y: "10%", z: 180, size: 1, delay: -1.5 },
-  { color: "#3F5A2B", x: "90%", y: "52%", z: 260, size: 1.25, delay: -3 },
-  { color: "#5B2A14", x: "2%", y: "58%", z: 140, size: 0.9, delay: -2 },
-  { color: "#E8C46A", x: "74%", y: "72%", z: 90, size: 0.8, delay: -4 },
-  { color: "#F6E9C8", x: "18%", y: "76%", z: 60, size: 0.75, delay: -5 },
-];
-
-function Balloon({ color }: { color: string }) {
-  return (
-    <div className="balloon-body">
-      {[0, 1, 2, 3, 4, 5].map((i) => (
-        <span key={i} className="balloon-slice" style={{ background: color, transform: `rotateY(${i * 30}deg)` }} />
-      ))}
-      <span className="balloon-knot" style={{ background: color }} />
-      <span className="balloon-string" />
-    </div>
-  );
-}
-
 export default function Hero() {
   const stage = useRef<HTMLDivElement>(null);
-  const [popped, setPopped] = useState<number[]>([]);
   const [to, setTo] = useState("");
 
   useEffect(() => {
@@ -40,16 +20,9 @@ export default function Hero() {
     if (name) setTo(name.slice(0, 30));
   }, []);
 
-  const pop = (e: React.MouseEvent, i: number) => {
-    e.stopPropagation();
-    if (popped.includes(i)) return;
-    setPopped((p) => [...p, i]);
-    fireConfetti(e.clientX, e.clientY, 50);
-    setTimeout(() => setPopped((p) => p.filter((n) => n !== i)), 3500);
-  };
-
   useEffect(() => {
     const el = stage.current!;
+    const hero = el.closest(".hero") as HTMLElement;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     let tx = 0;
@@ -59,7 +32,6 @@ export default function Hero() {
     let lastMove = 0;
     let raf = 0;
 
-    const hero = el.closest(".hero") as HTMLElement;
     const move = (e: PointerEvent) => {
       hero.style.setProperty("--mx", `${e.clientX}px`);
       hero.style.setProperty("--my", `${e.clientY - hero.getBoundingClientRect().top}px`);
@@ -96,8 +68,13 @@ export default function Hero() {
     };
   }, []);
 
+  const onHeroClick = (e: React.MouseEvent) => {
+    fireConfetti(e.clientX, e.clientY, 70);
+    window.dispatchEvent(new CustomEvent("hero-click", { detail: { x: e.clientX, y: e.clientY } }));
+  };
+
   return (
-    <section className="hero" onClick={(e) => fireConfetti(e.clientX, e.clientY, 70)}>
+    <section className="hero" onClick={onHeroClick}>
       <Spices count={26} />
       <div className="steam" aria-hidden="true">
         <span />
@@ -114,10 +91,12 @@ export default function Hero() {
 
           <div className="arch arch-a" />
           <div className="arch arch-b" />
-          <div className="sun-disc" />
 
           <div className="person">
-            <Image src="/photos/hasini.png" alt="Hasini" width={970} height={1650} priority sizes="(max-width: 700px) 60vw, 420px" />
+            <div className="person-art">
+              <Image src="/photos/hasini.png" alt="Hasini" width={970} height={1621} priority sizes="(max-width: 700px) 60vw, 420px" />
+              <Bling />
+            </div>
           </div>
 
           <h1 className="name3d" aria-label={invite.guest}>
@@ -136,23 +115,13 @@ export default function Hero() {
             ))}
           </h1>
 
-          {BALLOONS.map((b, i) => (
-            <div
-              key={i}
-              className={popped.includes(i) ? "balloon popped" : "balloon"}
-              onClick={(e) => pop(e, i)}
-              style={{ left: b.x, top: b.y, transform: `translateZ(${b.z}px) scale(${b.size})`, animationDelay: `${b.delay}s` }}
-            >
-              <Balloon color={b.color} />
-            </div>
-          ))}
-
           <p className="hero-line">
             <span>{to ? `${to}, ${invite.guest} is turning a year more brilliant.` : `${invite.guest} is turning a year more brilliant.`}</span>
             <em>Biryani is on the menu. Pop a balloon.</em>
           </p>
         </div>
       </div>
+      <Balloons3D />
       <a href="#invite" className="scroll-cue" onClick={(e) => e.stopPropagation()}>
         Open the invitation
       </a>

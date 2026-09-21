@@ -6,6 +6,7 @@ import Polaroid from "@/components/Polaroid";
 import Intro from "@/components/Intro";
 import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
+import ScrollBar from "@/components/ScrollBar";
 import Confetti from "@/components/Confetti";
 import { invite } from "@/lib/invite";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <Intro />
       <Confetti />
       <Reveal />
+      <ScrollBar />
       <Hero />
       <Marquee />
       <InviteCard />

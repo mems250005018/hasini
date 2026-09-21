@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { fireConfetti } from "./Confetti";
 import { invite } from "@/lib/invite";
 
@@ -21,30 +22,35 @@ function useCountdown(target: number) {
   };
 }
 
+const pop = {
+  whileHover: { scale: 1.07, rotate: -2 },
+  whileTap: { scale: 0.94 },
+  transition: { type: "spring", stiffness: 400, damping: 15 },
+} as const;
+
 export default function InviteCard() {
   const date = new Date(invite.date);
   const [flipped, setFlipped] = useState(false);
+  const [lifted, setLifted] = useState(false);
   const [said, setSaid] = useState(false);
-  const card = useRef<HTMLDivElement>(null);
   const time = useCountdown(date.getTime());
+
+  // Pointer tilt, smoothed with springs.
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const tiltY = useSpring(useTransform(mx, [-0.5, 0.5], [-14, 14]), { stiffness: 120, damping: 16 });
+  const tiltX = useSpring(useTransform(my, [-0.5, 0.5], [10, -10]), { stiffness: 120, damping: 16 });
 
   const day = date.toLocaleDateString("en-IN", { weekday: "long" });
   const dayNum = date.toLocaleDateString("en-IN", { day: "numeric" });
   const month = date.toLocaleDateString("en-IN", { month: "long" });
   const clock = date.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
 
-  const tilt = (e: React.PointerEvent) => {
-    const el = card.current!;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.setProperty("--tx", `${px * 22}deg`);
-    el.style.setProperty("--ty", `${-py * 16}deg`);
-  };
-  const untilt = () => {
-    const el = card.current!;
-    el.style.setProperty("--tx", "0deg");
-    el.style.setProperty("--ty", "0deg");
+  const flip = () => {
+    setFlipped((f) => !f);
+    setLifted(true);
+    setTimeout(() => setLifted(false), 550);
+    fireConfetti(undefined, undefined, 40);
   };
 
   const rsvp = (e: React.MouseEvent) => {
@@ -67,18 +73,36 @@ export default function InviteCard() {
     <section id="invite" className="invite reveal">
       <h2 className="kicker rv">Flip it over</h2>
 
-      <div className="card-perspective rv from-left" onPointerMove={tilt} onPointerLeave={untilt}>
-        <div className="card-tilt" ref={card}>
-          <button
-            type="button"
-            className={flipped ? "card flipped" : "card"}
-            onClick={() => {
-              setFlipped((f) => !f);
-              fireConfetti(undefined, undefined, 40);
-            }}
+      <div
+        className="card-perspective rv from-left"
+        onPointerMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          mx.set((e.clientX - r.left) / r.width - 0.5);
+          my.set((e.clientY - r.top) / r.height - 0.5);
+        }}
+        onPointerLeave={() => {
+          mx.set(0);
+          my.set(0);
+        }}
+      >
+        <motion.div className="card-tilt" style={{ rotateX: tiltX, rotateY: tiltY }} animate={{ scale: lifted ? 1.09 : 1 }} transition={{ type: "spring", stiffness: 200, damping: 16 }}>
+          <motion.div
+            className="card"
+            role="button"
+            tabIndex={0}
             aria-label="Flip the invitation card"
+            aria-pressed={flipped}
+            onClick={flip}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                flip();
+              }
+            }}
+            animate={{ rotateY: flipped ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 60, damping: 13, mass: 1.1 }}
           >
-            <span className="face front-face">
+            <div className="face front-face">
               <span className="card-small">You are invited to</span>
               <span className="card-big">
                 {invite.guest}
@@ -90,8 +114,9 @@ export default function InviteCard() {
                 <b>{dayNum}</b>
                 {month}
               </span>
-            </span>
-            <span className="face back-face">
+              <span className="card-hint">Tap to flip</span>
+            </div>
+            <div className="face back-face">
               <span className="card-small">The details</span>
               <dl>
                 <div>
@@ -123,9 +148,9 @@ export default function InviteCard() {
                   <dd>{invite.dressCode}</dd>
                 </div>
               </dl>
-            </span>
-          </button>
-        </div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       <div className="countdown" aria-live="off">
@@ -140,16 +165,16 @@ export default function InviteCard() {
       </div>
 
       <div className="rsvp rv">
-        <button type="button" className="big-btn" onClick={rsvp}>
+        <motion.button type="button" className="big-btn" onClick={rsvp} {...pop}>
           {said ? "See you there" : "I'm coming"}
-        </button>
-        <a className="big-btn alt" href={calHref} target="_blank" rel="noopener noreferrer">
+        </motion.button>
+        <motion.a className="big-btn alt" href={calHref} target="_blank" rel="noopener noreferrer" {...pop}>
           Add to calendar
-        </a>
+        </motion.a>
         {waHref && (
-          <a className="big-btn alt" href={waHref} target="_blank" rel="noopener noreferrer">
+          <motion.a className="big-btn alt" href={waHref} target="_blank" rel="noopener noreferrer" {...pop}>
             Tell {invite.host} on WhatsApp
-          </a>
+          </motion.a>
         )}
       </div>
     </section>

@@ -2,10 +2,14 @@
 
 import Image from "next/image";
 import { useRef } from "react";
+import { motion, useMotionValue, useTransform } from "motion/react";
+import SplitText from "./SplitText";
 import { invite } from "@/lib/invite";
 
 export default function Polaroid() {
   const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const swing = useTransform(x, [-220, 0, 220], [-16, 0, 16]);
 
   const tilt = (e: React.PointerEvent) => {
     const el = ref.current!;
@@ -21,15 +25,25 @@ export default function Polaroid() {
   return (
     <section className="memory reveal">
       <div className="memory-perspective rv from-left" onPointerMove={tilt} onPointerLeave={reset}>
+        <motion.div
+          className="polaroid-drag"
+          drag="x"
+          dragSnapToOrigin
+          dragElastic={0.35}
+          style={{ x, rotate: swing, touchAction: "pan-y" }}
+          whileDrag={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 120, damping: 12 }}
+        >
         <div className="polaroid" ref={ref}>
           <span className="tape" />
           <Image src="/photos/friends.jpeg" alt="Hasini with two friends showing off a project" width={1280} height={960} sizes="(max-width: 700px) 80vw, 480px" />
           <p>Same people. Same chaos. One more candle.</p>
         </div>
+        </motion.div>
       </div>
       <div className="memory-copy rv from-right">
         <h2 className="kicker">Why this party</h2>
-        <p className="memory-big">Because {invite.guest} makes every room louder in the best way.</p>
+        <SplitText className="memory-big" text={`Because ${invite.guest} makes every room louder in the best way.`} />
         <p className="memory-small">So the biryani is ordered, the cake is ready, and your only job is to show up.</p>
       </div>
     </section>
