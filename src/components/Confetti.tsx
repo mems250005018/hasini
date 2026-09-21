@@ -96,7 +96,7 @@ export default function Confetti() {
     };
     raf = requestAnimationFrame(tick);
 
-    const opening = window.setTimeout(() => fireConfetti(undefined, undefined, 140), 700);
+    const opening = window.setTimeout(() => fireConfetti(undefined, undefined, 60), 5600);
 
     return () => {
       cancelAnimationFrame(raf);

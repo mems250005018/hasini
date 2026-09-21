@@ -65,9 +65,9 @@ export default function InviteCard() {
 
   return (
     <section id="invite" className="invite reveal">
-      <h2 className="kicker">Flip it over</h2>
+      <h2 className="kicker rv">Flip it over</h2>
 
-      <div className="card-perspective" onPointerMove={tilt} onPointerLeave={untilt}>
+      <div className="card-perspective rv from-left" onPointerMove={tilt} onPointerLeave={untilt}>
         <div className="card-tilt" ref={card}>
           <button
             type="button"
@@ -130,7 +130,7 @@ export default function InviteCard() {
 
       <div className="countdown" aria-live="off">
         {(time ? Object.entries(time) : [["Days", 0], ["Hours", 0], ["Minutes", 0], ["Seconds", 0]]).map(([label, value], i) => (
-          <div className="tile" key={label} style={{ ["--i" as string]: i }}>
+          <div className="tile rv" key={label} style={{ ["--i" as string]: i }}>
             <span className="tile-num" key={String(value)}>
               {String(value).padStart(2, "0")}
             </span>
@@ -139,7 +139,7 @@ export default function InviteCard() {
         ))}
       </div>
 
-      <div className="rsvp">
+      <div className="rsvp rv">
         <button type="button" className="big-btn" onClick={rsvp}>
           {said ? "See you there" : "I'm coming"}
         </button>

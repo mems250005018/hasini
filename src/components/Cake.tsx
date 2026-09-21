@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { fireConfetti } from "./Confetti";
+import Spices from "./Spices";
 
 export default function Cake() {
   const mount = useRef<HTMLDivElement>(null);
@@ -116,7 +117,8 @@ export default function Cake() {
 
   return (
     <section className="cake-section reveal">
-      <div className="cake-copy">
+      <Spices count={14} />
+      <div className="cake-copy rv from-left">
         <h2 className="kicker">Dessert, after the biryani</h2>
         <p className="cake-title">Spin the cake. Then make a wish.</p>
         <button type="button" className="big-btn" onClick={celebrate}>
@@ -125,7 +127,7 @@ export default function Cake() {
         <p className="wish">Swipe sideways to turn it. Scroll normally to move on.</p>
       </div>
 
-      <div className="cake-stage">
+      <div className="cake-stage rv from-right">
         <div ref={mount} className="cake-canvas" />
         {!ready && !failed && <p className="cake-status">Baking the cake...</p>}
         {failed && <p className="cake-status">The cake could not load. Refresh to try again.</p>}

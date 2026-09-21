@@ -20,14 +20,14 @@ export default function Polaroid() {
 
   return (
     <section className="memory reveal">
-      <div className="memory-perspective" onPointerMove={tilt} onPointerLeave={reset}>
+      <div className="memory-perspective rv from-left" onPointerMove={tilt} onPointerLeave={reset}>
         <div className="polaroid" ref={ref}>
           <span className="tape" />
           <Image src="/photos/friends.jpeg" alt="Hasini with two friends showing off a project" width={1280} height={960} sizes="(max-width: 700px) 80vw, 480px" />
           <p>Same people. Same chaos. One more candle.</p>
         </div>
       </div>
-      <div className="memory-copy">
+      <div className="memory-copy rv from-right">
         <h2 className="kicker">Why this party</h2>
         <p className="memory-big">Because {invite.guest} makes every room louder in the best way.</p>
         <p className="memory-small">So the biryani is ordered, the cake is ready, and your only job is to show up.</p>

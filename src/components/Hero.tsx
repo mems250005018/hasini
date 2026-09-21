@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { fireConfetti } from "./Confetti";
+import Spices from "./Spices";
 import { invite } from "@/lib/invite";
 
 const LETTERS = invite.guest.toUpperCase().split("");
@@ -58,7 +59,10 @@ export default function Hero() {
     let lastMove = 0;
     let raf = 0;
 
+    const hero = el.closest(".hero") as HTMLElement;
     const move = (e: PointerEvent) => {
+      hero.style.setProperty("--mx", `${e.clientX}px`);
+      hero.style.setProperty("--my", `${e.clientY - hero.getBoundingClientRect().top}px`);
       tx = (e.clientX / window.innerWidth - 0.5) * 2;
       ty = (e.clientY / window.innerHeight - 0.5) * 2;
       lastMove = performance.now();
@@ -94,6 +98,14 @@ export default function Hero() {
 
   return (
     <section className="hero" onClick={(e) => fireConfetti(e.clientX, e.clientY, 70)}>
+      <Spices count={26} />
+      <div className="steam" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="hero-perspective">
         <div className="stage" ref={stage}>
           <div className="back-word" aria-hidden="true">
