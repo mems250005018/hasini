@@ -1279,3 +1279,43 @@ img {
   .graph-stage { height: 70svh; border-radius: 18px; }
   .graph-hint { font-size: 0.95rem; }
 }
+
+/* scroll direction arrows */
+.scroll-arrows {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.arrow-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--sun);
+  box-shadow: var(--sh-1);
+  display: grid;
+  place-items: center;
+}
+.arrow-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arrow-btn.down svg { animation: nudgeDown 1.4s ease-in-out infinite; }
+.arrow-btn.up svg { animation: nudgeUp 1.4s ease-in-out infinite; }
+@keyframes nudgeDown { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(4px); } }
+@keyframes nudgeUp { 0%, 100% { transform: translateY(3px); } 50% { transform: translateY(-4px); } }
+@media (max-width: 700px) {
+  .scroll-arrows { right: 8px; }
+  .arrow-btn { width: 38px; height: 38px; }
+  .arrow-btn svg { width: 19px; height: 19px; }
+}

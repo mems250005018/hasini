@@ -4,11 +4,12 @@ export const invite = {
   host: "Jagrut",
   from: "Jagrut, Dipika",
   // Local time with offset. Change to the real party date.
-  date: "2026-09-23T00:00:00+05:30",
+  date: "2026-09-23T00:00:00+05:30", // the birthday moment: the countdown runs to this
+  meetAt: "2026-09-22T23:50:00+05:30", // when everyone gathers (shown on the card and used for the calendar)
+  whenLabel: "22 Midnight",
   venue: "Lake",
   address: "",
   dressCode: "Come as you are, bring the noise",
-  menu: "Chicken biryani, obviously",
   // Country code plus number, digits only (e.g. "919876543210"). Leave empty to hide WhatsApp.
   whatsapp: "",
 };

@@ -8,6 +8,7 @@ import Intro from "@/components/fx/Intro";
 import Marquee from "@/components/sections/Marquee";
 import Reveal from "@/components/fx/Reveal";
 import ScrollBar from "@/components/fx/ScrollBar";
+import ScrollArrows from "@/components/fx/ScrollArrows";
 import Confetti from "@/components/fx/Confetti";
 import { invite } from "@/lib/invite";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <Confetti />
       <Reveal />
       <ScrollBar />
+      <ScrollArrows />
       <Hero />
       <Marquee />
       <InviteCard />

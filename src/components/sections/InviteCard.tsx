@@ -41,15 +41,10 @@ export default function InviteCard() {
   const tiltY = useSpring(useTransform(mx, [-0.5, 0.5], [-14, 14]), { stiffness: 120, damping: 16 });
   const tiltX = useSpring(useTransform(my, [-0.5, 0.5], [10, -10]), { stiffness: 120, damping: 16 });
 
-  const day = date.toLocaleDateString("en-IN", { weekday: "long" });
   const dayNum = date.toLocaleDateString("en-IN", { day: "numeric" });
   const month = date.toLocaleDateString("en-IN", { month: "long" });
-  const clock = date.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
-  // The party is the night before: e.g. Tuesday night, 22 Sept, running into midnight.
-  const eve = new Date(date.getTime() - 86400000);
-  const eveDay = eve.toLocaleDateString("en-IN", { weekday: "long" });
-  const eveNum = eve.toLocaleDateString("en-IN", { day: "numeric" });
-  const eveMonth = eve.toLocaleDateString("en-IN", { month: "long" });
+  const meet = new Date(invite.meetAt);
+  const meetClock = meet.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
 
   const flip = () => {
     setFlipped((f) => !f);
@@ -67,11 +62,11 @@ export default function InviteCard() {
     : null;
 
   const stamp = (d: Date) => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
-  const end = new Date(date.getTime() + 4 * 3600000);
+  const end = new Date(meet.getTime() + 4 * 3600000);
   const calHref =
     "https://calendar.google.com/calendar/render?action=TEMPLATE" +
     `&text=${encodeURIComponent(`${invite.guest}'s Birthday`)}` +
-    `&dates=${stamp(date)}/${stamp(end)}` +
+    `&dates=${stamp(meet)}/${stamp(end)}` +
     `&location=${encodeURIComponent([invite.venue, invite.address].filter(Boolean).join(", "))}`;
 
   return (
@@ -127,9 +122,9 @@ export default function InviteCard() {
                 <div>
                   <dt>When</dt>
                   <dd>
-                    {eveDay} night, {eveNum} {eveMonth}
+                    {invite.whenLabel}
                     <br />
-                    Midnight, {clock} on {day}, {dayNum} {month}
+                    {meetClock}
                   </dd>
                 </div>
                 <div>
@@ -143,10 +138,6 @@ export default function InviteCard() {
                       </>
                     )}
                   </dd>
-                </div>
-                <div>
-                  <dt>Eat</dt>
-                  <dd>{invite.menu}</dd>
                 </div>
                 <div>
                   <dt>Wear</dt>
