@@ -19,6 +19,10 @@ export const photos = {
     "/photos/hasini/frame-3.webp",
     "/photos/hasini/frame-4.webp",
     "/photos/hasini/frame-5.webp",
+    "/photos/hasini/frame-6.webp",
+    "/photos/hasini/frame-7.webp",
+    "/photos/hasini/frame-8.webp",
+    "/photos/hasini/frame-9.webp",
   ],
 
   // The menu gallery.

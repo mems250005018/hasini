@@ -5,9 +5,9 @@ import { motion } from "motion/react";
 import { photos } from "@/lib/assets";
 
 // Depth offsets zig-zag so the path through the photos winds instead of running straight.
-const DEPTHS = [0.2, -1.4, 0.6, -1.1, 0.4, -1.3, 0.5];
+const DEPTHS = [0.2, -1.4, 0.6, -1.1, 0.4, -1.3, 0.5, -1.0, 0.3];
 const FRAMES = photos.frames.map((src, i) => ({ src, label: `MOMENT ${String(i + 1).padStart(2, "0")}`, z: DEPTHS[i % DEPTHS.length] }));
-const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight"];
+const COUNT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 const GAP = 5.6; // distance between photos along the x axis
 const HEIGHT = 3.3; // height of every cut-out in world units
 const BG = 0x2a140a;

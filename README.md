@@ -23,7 +23,7 @@ assets/originals/        full-size source images (not served)
 public/
   models/cake.glb        3D cake
   photos/
-    hasini/              portrait.png (hero) and frame-1..5.webp (3D photo graph)
+    hasini/              portrait.png (hero) and frame-1..9.webp (3D photo graph)
     dishes/              chicken biryani, egg rice, non-veg
     group/friends.jpeg   polaroid
 src/
