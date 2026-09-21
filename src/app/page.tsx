@@ -19,7 +19,7 @@ export default function Home() {
       <Polaroid />
       <footer className="foot">
         <p>
-          {invite.guest}, this one is for you. Love, {invite.host}.
+          {invite.guest}, this one is for you. Love, {invite.from}.
         </p>
       </footer>
     </main>
