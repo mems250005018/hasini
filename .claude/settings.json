@@ -3,7 +3,23 @@
     "allow": [
       "Bash(git commit -q -m 'Add photos and update dependencies *)",
       "Bash(gh auth *)",
-      "Bash(git commit -q -m 'Build 3D animated birthday invitation for Hasini *)"
+      "Bash(git commit -q -m 'Build 3D animated birthday invitation for Hasini *)",
+      "Bash(git ls-remote *)",
+      "Bash(git fetch *)",
+      "Bash(echo \"exit $?\")",
+      "Bash(git config *)",
+      "Bash(GIT_TRACE=0 git push -u origin main)",
+      "Bash(python -)",
+      "Bash(git commit -q -m 'Mobile responsive, dynamic hero, calendar link; 12 AM at Lake, drop host row *)",
+      "Bash(mkdir -p public/models)",
+      "Bash(mv fruit_cake_draft.glb public/models/cake.glb)",
+      "Bash(npm i *)",
+      "Bash(python \"C:/Users/ASUS/AppData/Local/Temp/claude/c--Users-ASUS-Desktop-hasini/f695f5a5-46af-48d1-9bab-a41dab91b903/scratchpad/edit.py\")",
+      "Bash(git commit -q -m 'Render cake GLB with three.js, chicken biryani theme *)",
+      "Bash(git commit -q -m 'Set party date to 23 Sept, 12 AM *)",
+      "Bash(sed -i 's|Love, {invite.host}.|Love, {invite.from}.|' src/app/page.tsx)",
+      "Bash(sed -i 's|  host: \"Jagrut\",|  host: \"Jagrut\",\\\\n  from: \"Dipika, Deepali and Jagrut\",|' src/lib/invite.ts)",
+      "Bash(git commit -q -m 'Sign footer from Dipika, Deepali and Jagrut *)"
     ]
   }
 }
