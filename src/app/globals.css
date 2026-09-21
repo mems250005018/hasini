@@ -1,11 +1,11 @@
 :root {
-  --paper: #ede0c8;
-  --paper-deep: #e0cfae;
-  --tomato: #d9432a;
-  --sun: #f0a80c;
-  --pine: #0e5e50;
-  --plum: #7a1f3d;
-  --ink: #2b1b12;
+  --paper: #f3e2b8;
+  --paper-deep: #e6cf98;
+  --tomato: #b7311b;
+  --sun: #f2a81d;
+  --pine: #3f5a2b;
+  --plum: #5b2a14;
+  --ink: #2a140a;
   --f-display: var(--font-display), system-ui, sans-serif;
   --f-serif: var(--font-serif), Georgia, serif;
 }
@@ -437,7 +437,6 @@ img {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
   gap: 2rem;
-  max-width: none;
 }
 .cake-copy {
   max-width: 460px;
@@ -464,102 +463,82 @@ img {
   font-style: italic;
   font-size: 1.3rem;
 }
-.cake-perspective {
-  perspective: 1000px;
-  height: 460px;
+.cake-stage {
+  position: relative;
+  height: clamp(320px, 60vw, 560px);
+  width: 100%;
+}
+.cake-canvas,
+.cake-canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cake-canvas canvas {
+  cursor: grab;
+}
+.cake-status {
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
-  cursor: grab;
-  touch-action: pan-y;
-  user-select: none;
+  text-align: center;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  pointer-events: none;
 }
-.cake-perspective:active {
-  cursor: grabbing;
+
+/* ---------- biryani ring ---------- */
+.ring-section {
+  background: var(--tomato);
+  color: var(--paper);
+  padding: clamp(3rem, 8vw, 5rem) 1rem;
+  text-align: center;
+  overflow: hidden;
 }
-.cake-rotor {
-  transform-style: preserve-3d;
-  transform: rotateX(-22deg) rotateY(var(--spin, 0deg));
-  width: 0;
-  height: 0;
+.ring-section .kicker {
+  color: var(--sun);
+}
+.ring-perspective {
+  perspective: 1100px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+}
+.ring {
   position: relative;
-  top: 60px;
-}
-.cake {
-  position: absolute;
+  width: 260px;
+  height: 100px;
   transform-style: preserve-3d;
+  animation: ringSpin 16s linear infinite;
 }
-.cake.auto {
-  animation: spinY 18s linear infinite;
-}
-.plate {
+.ring-panel {
   position: absolute;
-  width: 360px;
-  height: 360px;
-  margin: -180px 0 0 -180px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 4px solid var(--ink);
-  transform: translateY(70px) rotateX(90deg);
-}
-.tier {
-  position: absolute;
-  transform-style: preserve-3d;
-}
-.tier-side {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 50% 50%;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ink);
+  background: var(--sun);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: center;
+  padding: 0 0.5rem;
   backface-visibility: hidden;
 }
-.drip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  border-radius: 0 0 8px 8px;
-}
-.tier-top {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 50%;
-  border: 3px solid var(--ink);
-}
-.candles {
-  position: absolute;
-  transform-style: preserve-3d;
-}
-.candle {
-  position: absolute;
-  transform-style: preserve-3d;
-}
-.stick {
-  position: absolute;
-  left: -4px;
-  top: 0;
-  width: 8px;
-  height: 34px;
+.ring-panel:nth-child(even) {
   background: var(--paper);
-  border: 2px solid var(--ink);
 }
-.flame {
-  position: absolute;
-  left: -7px;
-  top: -22px;
-  width: 14px;
-  height: 22px;
-  background: var(--sun);
-  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
-  border: 2px solid var(--tomato);
-  transform-origin: 50% 100%;
-  animation: flicker 0.45s ease-in-out infinite alternate;
-  transition: transform 0.3s, opacity 0.3s;
+.ring-note {
+  margin-top: 2rem;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
 }
-.flame.out {
-  transform: scale(0);
-  opacity: 0;
-  animation: none;
+@keyframes ringSpin {
+  to { transform: rotateX(-12deg) rotateY(-360deg); }
 }
 
 /* ---------- memory ---------- */
@@ -692,6 +671,8 @@ img {
 }
 
 @media (max-width: 700px) {
+  .ring-perspective { height: 150px; }
+  .ring { scale: 0.8; }
   .balloon { width: 58px; height: 72px; }
   .balloon-string { height: 70px; }
   .hero { min-height: 100svh; }
@@ -702,8 +683,6 @@ img {
   .hero-line { bottom: 5%; font-size: 0.95rem; }
   .sun-disc { transform: translateX(90%) translateZ(-200px); top: 24%; }
   .scroll-cue { bottom: auto; top: 0.9rem; right: 0.9rem; font-size: 0.9rem; }
-  .cake-perspective { height: 380px; }
-  .cake-rotor { transform: rotateX(-22deg) rotateY(var(--spin, 0deg)) scale(0.78); top: 40px; }
   .cake-copy { text-align: center; }
   .rsvp .big-btn { width: 100%; text-align: center; }
   .big-btn { padding: 0.9rem 1.4rem; }

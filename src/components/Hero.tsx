@@ -9,12 +9,12 @@ const LETTERS = invite.guest.toUpperCase().split("");
 const SLICES = 9;
 
 const BALLOONS = [
-  { color: "#D9432A", x: "6%", y: "14%", z: 220, size: 1.1, delay: 0 },
-  { color: "#F0A80C", x: "84%", y: "10%", z: 180, size: 1, delay: -1.5 },
-  { color: "#0E5E50", x: "90%", y: "52%", z: 260, size: 1.25, delay: -3 },
-  { color: "#7A1F3D", x: "2%", y: "58%", z: 140, size: 0.9, delay: -2 },
-  { color: "#2F7FB8", x: "74%", y: "72%", z: 90, size: 0.8, delay: -4 },
-  { color: "#F4C7A1", x: "18%", y: "76%", z: 60, size: 0.75, delay: -5 },
+  { color: "#B7311B", x: "6%", y: "14%", z: 220, size: 1.1, delay: 0 },
+  { color: "#F2A81D", x: "84%", y: "10%", z: 180, size: 1, delay: -1.5 },
+  { color: "#3F5A2B", x: "90%", y: "52%", z: 260, size: 1.25, delay: -3 },
+  { color: "#5B2A14", x: "2%", y: "58%", z: 140, size: 0.9, delay: -2 },
+  { color: "#E8C46A", x: "74%", y: "72%", z: 90, size: 0.8, delay: -4 },
+  { color: "#F6E9C8", x: "18%", y: "76%", z: 60, size: 0.75, delay: -5 },
 ];
 
 function Balloon({ color }: { color: string }) {
@@ -137,7 +137,7 @@ export default function Hero() {
 
           <p className="hero-line">
             <span>{to ? `${to}, ${invite.guest} is turning a year more brilliant.` : `${invite.guest} is turning a year more brilliant.`}</span>
-            <em>Tap anywhere. Pop a balloon.</em>
+            <em>Biryani is on the menu. Pop a balloon.</em>
           </p>
         </div>
       </div>

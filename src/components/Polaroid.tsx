@@ -30,7 +30,7 @@ export default function Polaroid() {
       <div className="memory-copy">
         <h2 className="kicker">Why this party</h2>
         <p className="memory-big">Because {invite.guest} makes every room louder in the best way.</p>
-        <p className="memory-small">So the room is booked, the cake is ordered, and your only job is to show up.</p>
+        <p className="memory-small">So the biryani is ordered, the cake is ready, and your only job is to show up.</p>
       </div>
     </section>
   );

@@ -115,6 +115,10 @@ export default function InviteCard() {
                   </dd>
                 </div>
                 <div>
+                  <dt>Eat</dt>
+                  <dd>{invite.menu}</dd>
+                </div>
+                <div>
                   <dt>Wear</dt>
                   <dd>{invite.dressCode}</dd>
                 </div>

@@ -7,8 +7,9 @@ export const invite = {
   venue: "Lake",
   address: "",
   dressCode: "Come as you are, bring the noise",
+  menu: "Chicken biryani, obviously",
   // Country code plus number, digits only (e.g. "919876543210"). Leave empty to hide WhatsApp.
   whatsapp: "",
 };
 
-export const palette = ["#D9432A", "#F0A80C", "#0E5E50", "#7A1F3D", "#F4C7A1", "#2F7FB8"];
+export const palette = ["#B7311B", "#F2A81D", "#3F5A2B", "#5B2A14", "#F6E9C8", "#E8C46A"];

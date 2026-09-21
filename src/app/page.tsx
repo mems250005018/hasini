@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import InviteCard from "@/components/InviteCard";
 import Cake from "@/components/Cake";
+import BiryaniRing from "@/components/BiryaniRing";
 import Polaroid from "@/components/Polaroid";
 import Reveal from "@/components/Reveal";
 import Confetti from "@/components/Confetti";
@@ -13,6 +14,7 @@ export default function Home() {
       <Reveal />
       <Hero />
       <InviteCard />
+      <BiryaniRing />
       <Cake />
       <Polaroid />
       <footer className="foot">
